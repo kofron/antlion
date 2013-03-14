@@ -1,19 +1,19 @@
-function [ Bz, Bx, By ] = finite_sol_field( ni, L, a, x, y, z )
+function [ Bz, Bx, By ] = finite_sol_field( ni, L, a, x, y, z, z0 )
 %FINITE_SOL_FIELD field from a finite solenoid as detailed in NASA
 %technical note D-465, "The Magnetic Field of a Finite Solenoid"
+    zl = z-z0;
 
     % zeta
-    zt_p = z - L/2;
-    zt_m = z + L/2;
+    zt_p = zl - L/2;
+    zt_m = zl + L/2;
     
     % convert to cylindricals
-    [th, rh, z] = cart2pol(x,y,z);
+    [th, rh] = cart2pol(x,y,zl);
 
 
     % mu naught
     mu0 = 4*pi*1e-7;
-    pref = i*1.0e-7;
-
+    
     if rh == 0
         b_rh = 0;
         b_z_t = @(zt) zt/sqrt(zt^2 + a^2); 
